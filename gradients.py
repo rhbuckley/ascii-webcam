@@ -93,7 +93,6 @@ class AsciiGradient:
         area = np.multiply(np.add(padding, arr.shape))
         return arr.sum() / area
 
-
     def find_gradient(self, palette: str, return_dict: bool) -> Union[str, dict]:
         intensity_map = {self.get_intensity_from_char(char): char for char in set(palette)}
 
@@ -123,7 +122,8 @@ class AsciiGradient:
 class PresetGradients:
     UNI = AsciiGradient(" ˙·.,:;<*≠am#W@Ŵ₩", ordered=True)
     ASCII = AsciiGradient(" .:-=+*#%@", ordered=True)
-    ASCII_EXTENDED = AsciiGradient(" `.-':_,^=;><+!rc*/z?sLTv)J7(|Fi{C}fI31tlu[neoZ5Yxjya]2ESwqkP6h9d4VpOGbUAKXHm8RD#$Bg0MNWQ%&@", ordered=True)
+    ASCII_EXTENDED = AsciiGradient("`.-':_,^=;><+!rc*/z?sLTv)J7(|Fi{C}fI31tlu["
+                                   "neoZ5Yxjya]2ESwqkP6h9d4VpOGbUAKXHm8RD#$Bg0MNWQ%&@", ordered=True)
 
     ALPHABETIC = AsciiGradient(" ABCDEFGHIJKLMNOPQRSTUVWXYZ", ordered=True)
     ALPHANUMERIC = AsciiGradient(" ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789", ordered=True)

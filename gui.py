@@ -135,7 +135,6 @@ class GUIOptions:
             manager=self.manager
         )
 
-
     def handle_ui_event(self, event: pygame.Event):
         match event.type:
             case pygame_gui.UI_BUTTON_PRESSED:
