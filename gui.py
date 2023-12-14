@@ -3,7 +3,15 @@
 
 `gui.py` This file contains the pygame gui
 used for visualizing the results of this
-project
+project, This file does use threading to keep
+the GUI responsive while the image is being
+converted to ascii.
+
+Tip: The GUI is buggy when initially focusing the
+app. Click out of the pygame window as to focus
+a different app, and then click back. I do not know
+why this is a problem, but I am using an Apple Silicon
+Mac. Maybe a different machine will have better results.
 """
 
 import sys
