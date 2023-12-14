@@ -21,6 +21,7 @@ import numpy as np
 import pygame
 import pygame_gui
 import pygame.camera
+import pygame.freetype
 import pygame.surfarray
 
 from itertools import count
@@ -39,7 +40,7 @@ class GUIOptions:
     WINDOW_HEIGHT: int = 600
 
     FONT_SIZE: int = 12
-    FONT_PATH: str = "./assets/Courier-prime.ttf"
+    FONT_PATH: str = "./assets/freefont/FreeMono.ttf"
 
     x_spacing: float = 0.9
     y_spacing: float = 0.9
@@ -266,7 +267,7 @@ class AsciiMain:
         self.background.fill(pygame.Color('#000000'))
 
         # load font
-        self.font = pygame.font.Font(
+        self.font = pygame.freetype.Font(
             self.options.FONT_PATH,
             self.options.FONT_SIZE
         )
@@ -346,13 +347,15 @@ class AsciiMain:
                         -> Solution: moved the flip function
                     
                     """
-
-                    text_surface = self.font.render(char, True, pygame.Color(*rgb))
-                    self.text_display.blit(text_surface,
-                                           (
-                                               i * self.options.FONT_SIZE * self.options.x_spacing,
-                                               j * self.options.FONT_SIZE * self.options.y_spacing
-                                           ))
+                    self.font.render_to(
+                        text=char,
+                        surf=self.text_display,
+                        dest=(
+                           i * self.options.FONT_SIZE * self.options.x_spacing,
+                           j * self.options.FONT_SIZE * self.options.y_spacing
+                        ),
+                        fgcolor=pygame.Color(*rgb),
+                    )
 
         else:
             # we need to flip (transpose) text_to_render
@@ -363,18 +366,11 @@ class AsciiMain:
             for i, row in enumerate(text_to_render):
                 # Join the characters to a row
                 text_to_render = "".join([char for char, *_ in row])
-
-                # Render the text to a surface
-                text_surface = self.font.render(
+                self.font.render_to(
                     text=text_to_render,
-                    antialias=True,
-                    color=pygame.Color("#FFFFFF")
-                )
-
-                # blit the text to the text_display
-                self.text_display.blit(
-                    text_surface,
-                    (0, i * self.options.FONT_SIZE * self.options.x_spacing)
+                    surf=self.text_display,
+                    dest=(0, i * self.options.FONT_SIZE * self.options.x_spacing),
+                    fgcolor=pygame.Color("#FFFFFF")
                 )
 
         # unlock the thread / engine loop
