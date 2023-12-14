@@ -14,6 +14,8 @@ A very common project in Computer Science is converting images to their Ascii eq
 ```shell
 gh repo clone rhbuckley/ascii-webcam
 pip install -r requirements.txt
+
+python gui.py
 ```
 
 ### Caveats
