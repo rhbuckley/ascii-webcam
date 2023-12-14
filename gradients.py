@@ -130,7 +130,5 @@ class PresetGradients:
 
     BLOCKS = AsciiGradient(" ░▒▓█", ordered=True)
     ARROWS = AsciiGradient(" ←↑→↓↖↗↘↙", ordered=True)
-    MUSICAL = AsciiGradient(" ♫♪♩♬♭♮♯°ø", ordered=True)
     GEOMETRIC = AsciiGradient(" ○◔◐◕◕◑●", ordered=True)
-    ROMAN = AsciiGradient(" ♔♕♖♗♘♙♚♛♜♝♞♟", ordered=True)
     MATHEMATICAL = AsciiGradient(" ≠≤≥±≈√∞∫∑∆π", ordered=True)
