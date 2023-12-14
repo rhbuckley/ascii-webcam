@@ -19,3 +19,7 @@ pip install -r requirements.txt
 ### Caveats
 
 - If you would like to use the Ascii Webcam feature, the program automatically selects your default webcam. Want to use another webcam? You can change this in `gui.py:270`
+
+### Inspiration
+
+Check out [this article](https://robertheaton.com/2018/06/12/programming-projects-for-advanced-beginners-ascii-art/), that goes over some of the methods implemented within this project. 
