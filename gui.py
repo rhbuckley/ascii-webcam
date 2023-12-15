@@ -25,9 +25,9 @@ import pygame.freetype
 import pygame.surfarray
 
 from itertools import count
-from gradients import PresetGradients
-from convert import AsciiImageConverter
-from normalize import NormalizationModes
+from ascii_webcam.gradients import PresetGradients
+from ascii_webcam.convert import AsciiImageConverter
+from ascii_webcam.normalize import NormalizationModes
 
 
 class GUIOptions:
