@@ -71,7 +71,8 @@ class AsciiImageConverter:
         new_image = np.empty(return_shape, dtype=object)
 
         # we will need to resize our original image to sample colors from
-        resized_image = image_resize(image, *self.image_size)
+        resized_image = image_resize(
+            image, width=self.image_size[0], height=self.image_size[1])
 
         for idx in np.ndindex(clean_image.shape[:2]):
             pixel = clean_image[idx]
