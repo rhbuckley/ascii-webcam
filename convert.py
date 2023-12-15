@@ -96,7 +96,7 @@ class AsciiImageConverter:
         """ convert an image to ascii for the terminal """
         converted_image = self.convert_image(image)
 
-        def wrap_pixel(child, pixel: tuple):
+        def wrap_pixel(child, pixel: list):
             if not self.color:
                 return child
             return Fore.RGB(*pixel) + child + Style.RESET
