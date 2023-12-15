@@ -12,8 +12,8 @@ import os
 import cv2
 import numpy as np
 from colored import Fore, Style
-from .gradients import AsciiGradient
-from .normalize import ImageNormalization, image_resize
+from gradients import AsciiGradient
+from normalize import ImageNormalization, image_resize
 
 DEFAULT_OUTPUT_WIDTH = 100
 

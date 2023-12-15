@@ -25,9 +25,9 @@ import pygame.freetype
 import pygame.surfarray
 
 from itertools import count
-from .gradients import PresetGradients
-from .convert import AsciiImageConverter
-from .normalize import NormalizationModes
+from gradients import PresetGradients
+from convert import AsciiImageConverter
+from normalize import NormalizationModes
 
 
 class GUIOptions:
@@ -72,7 +72,8 @@ class GUIOptions:
         def get_pos(offset: int = 60):
             padding = 10
             widget_size = (120, 50)  # length, width
-            start_x, start_y = self.WINDOW_WIDTH - widget_size[0] - padding, padding
+            start_x, start_y = self.WINDOW_WIDTH - \
+                widget_size[0] - padding, padding
             for i in count(start=0):
                 yield pygame.Rect((start_x, start_y + offset * i), widget_size)
 
@@ -90,7 +91,8 @@ class GUIOptions:
         self.m_gradient = PresetGradients.UNI
         self.selector_gradient = pygame_gui.elements.UIDropDownMenu(
             relative_rect=next(pos),
-            options_list=[opt for opt in PresetGradients.__dict__.keys() if not opt.startswith("__")],
+            options_list=[
+                opt for opt in PresetGradients.__dict__.keys() if not opt.startswith("__")],
             starting_option="UNI",
             manager=self.manager
         )
@@ -331,28 +333,28 @@ class AsciiMain:
                     ----------------------------
                     Problem: When using the ascii rendering with equidistant spacing,
                     the image appears in black / white mirrored above output
-                    
+
                     self.font.render << antialias. Tried with true / false, no difference
                     self.font.color << only upside down image appears...
-                    
+
                     self.text_display << location: I added in a if j > 30 break, to ensure that
                     the text wasn't wrapping the Surface, but that was not the issue. 
-                    
+
                     self.converter.convert_image: We saw good results in the no interpolation mode,
                     however, that did not have color.
-                    
+
                         -> Solved: I flipped the image too early in the normalize function. This resulted
                                     in one image being flipped (ascii) and one not being flipped (colored)
-                        
+
                         -> Solution: moved the flip function
-                    
+
                     """
                     self.font.render_to(
                         text=char,
                         surf=self.text_display,
                         dest=(
-                           i * self.options.FONT_SIZE * self.options.x_spacing,
-                           j * self.options.FONT_SIZE * self.options.y_spacing
+                            i * self.options.FONT_SIZE * self.options.x_spacing,
+                            j * self.options.FONT_SIZE * self.options.y_spacing
                         ),
                         fgcolor=pygame.Color(*rgb),
                     )
@@ -369,7 +371,8 @@ class AsciiMain:
                 self.font.render_to(
                     text=text_to_render,
                     surf=self.text_display,
-                    dest=(0, i * self.options.FONT_SIZE * self.options.x_spacing),
+                    dest=(0, i * self.options.FONT_SIZE *
+                          self.options.x_spacing),
                     fgcolor=pygame.Color("#FFFFFF")
                 )
 
@@ -386,7 +389,8 @@ class AsciiMain:
 
         if not self.options.m_use_color:
             # convert to grayscale -> use np.dot for performance
-            np_img = np_img.dot([0.298, 0.587, 0.114])[:, :, None].repeat(3, axis=2)
+            np_img = np_img.dot([0.298, 0.587, 0.114])[
+                :, :, None].repeat(3, axis=2)
 
         # render
         if self.options.m_mode == "ASCII":

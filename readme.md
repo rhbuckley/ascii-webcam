@@ -15,8 +15,24 @@ A very common project in Computer Science is converting images to their Ascii eq
 gh repo clone rhbuckley/ascii-webcam
 pip install -r requirements.txt
 
-python gui.py
+python ascii_webcam/gui.py
 ```
+
+The GUI looks for fonts in the `./assets` folder, so if you decide to run from inside of the ascii_webcam folder, you may need to change the path to the fonts. 
+
+#### Package
+
+I have converted this into a package for local use. If you wish to use this code elsewhere, you may run
+
+```shell
+source path/to/venv/bin/activate
+
+cd path/to/ascii_webcam
+
+pip install .
+```
+
+What you are doing here is using your project specific venv-interperter, and then installing the ascii_webcam package. This project is not useful enough for me to list this package on PyPi, so for now, it will be local only.
 
 ### Caveats
 
