@@ -59,8 +59,10 @@ class AsciiGradient:
         # now we can compute the gradient that the user wants
         self.gradient = self.find_gradient(palette, use_dict)
 
-    def closest_match(self, intensity: float):
+    def closest_match(self, intensity: float, return_intensity: bool = False):
         # given a pixel's intensity... find closest match
+        if return_intensity:
+            return intensity
         if isinstance(self.gradient, dict):
             return min(self.gradient, key=lambda x: abs(x - intensity))
         return self.gradient[int((intensity / 255) * (len(self.gradient) - 1))]

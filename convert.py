@@ -52,7 +52,7 @@ class AsciiImageConverter:
     convert an image to ascii.
     """
 
-    def convert_image(self, image: np.ndarray) -> np.ndarray:
+    def convert_image(self, image: np.ndarray, to_ascii: bool = True) -> np.ndarray:
         """
         This is the main function that converts an image to ascii. Returns an image
         in a 3D array... if AsciiImageConverter was passed color, each pixel will have
@@ -60,6 +60,8 @@ class AsciiImageConverter:
         the shape (char, ).
 
         :param image: the image to convert to ascii
+        :param to_ascii: should we convert the image to ascii? Default's true. If false,
+            we will return intensities instead of characters.
         :return: the converted image (height, width, 1), or (height, width, 4)
         :return:
         """
@@ -77,7 +79,11 @@ class AsciiImageConverter:
             # get the closest character match in first index, then
             # return rgb values in the next three indices
             new_image[idx] = [
-                self.gradient.closest_match(intensity),
+                # find closest match in the gradient
+                self.gradient.closest_match(
+                    intensity, 
+                    return_intensity=not to_ascii
+                ),
                 *(resized_image[idx] if self.color else []),
             ]
 
