@@ -11,15 +11,15 @@ gradients for the user to use within their own projects.
 """
 
 import numpy as np
-from typing import Union
 from PIL import ImageFont
 from itertools import chain
+from typing import Union, Callable
 
 FONT_SIZE = 100
 
 
 class AsciiGradient:
-    scaler: callable
+    scaler: Callable
 
     def __init__(self, palette: str, **kwargs):
         """
@@ -68,7 +68,8 @@ class AsciiGradient:
     def handle_scaler(self, scaler: str) -> None:
         match scaler:
             case 'minmax':
-                self.scaler = lambda x: (x - np.min(x)) / (np.max(x) - np.min(x))
+                self.scaler = lambda x: (
+                    x - np.min(x)) / (np.max(x) - np.min(x))
             case None:
                 self.scaler = lambda x: x
 
@@ -84,22 +85,26 @@ class AsciiGradient:
 
         # for performance...
         normalize_to_size = 2 * FONT_SIZE
-        arr = np.array(bmp, dtype=np.uint8).reshape(bmp.size[::-1])  # col-major to row-major
+        arr = np.array(bmp, dtype=np.uint8).reshape(
+            bmp.size[::-1])  # col-major to row-major
 
         # padding = CEIL( (SIZE - arr.shape) / 2 )
-        padding = np.ceil(np.divide(np.subtract(normalize_to_size, arr.shape), 2))
+        padding = np.ceil(
+            np.divide(np.subtract(normalize_to_size, arr.shape), 2))
 
         # cell_count = (padding + arr.shape)... area = cell_count[0] * cell_count[1]
         area = np.multiply(np.add(padding, arr.shape))
         return arr.sum() / area
 
     def find_gradient(self, palette: str, return_dict: bool) -> Union[str, dict]:
-        intensity_map = {self.get_intensity_from_char(char): char for char in set(palette)}
+        intensity_map = {self.get_intensity_from_char(
+            char): char for char in set(palette)}
 
         intensity_keys = list(intensity_map.keys())
         intensity_vals = list(self.scaler(intensity_map.values()))
 
-        intensity_map = self.sorted_dict_from_kv(intensity_keys, intensity_vals)
+        intensity_map = self.sorted_dict_from_kv(
+            intensity_keys, intensity_vals)
         if return_dict:
             return intensity_map
 
@@ -126,7 +131,8 @@ class PresetGradients:
                                    "neoZ5Yxjya]2ESwqkP6h9d4VpOGbUAKXHm8RD#$Bg0MNWQ%&@", ordered=True)
 
     ALPHABETIC = AsciiGradient(" ABCDEFGHIJKLMNOPQRSTUVWXYZ", ordered=True)
-    ALPHANUMERIC = AsciiGradient(" ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789", ordered=True)
+    ALPHANUMERIC = AsciiGradient(
+        " ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789", ordered=True)
 
     BLOCKS = AsciiGradient(" ░▒▓█", ordered=True)
     ARROWS = AsciiGradient(" ←↑→↓↖↗↘↙", ordered=True)
