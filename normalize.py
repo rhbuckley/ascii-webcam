@@ -12,7 +12,7 @@ lightness, average, and normalization (experimental).
 
 import cv2
 import numpy as np
-from typing import Union, Literal
+from typing import Callable, Union, Literal
 
 DEFAULT_OUTPUT_WIDTH = 100
 
@@ -23,10 +23,10 @@ NormalizationModes = ["luminance", "lightness", "average"]
 
 
 class ImageNormalization:
-    normalizer: callable
+    normalizer: Callable
     image_size: ImageSizeType
 
-    def __init__(self, mode: ModesType = "average", img_size: ImageSizeType = None):
+    def __init__(self, mode: ModesType = "average", img_size: Union[ImageSizeType, None] = None):
         """
         Initialize the ImageNormalization class.
 
@@ -52,7 +52,7 @@ class ImageNormalization:
         return image_norm
 
     @staticmethod
-    def _map_mode(mode: ModesType) -> callable:
+    def _map_mode(mode: ModesType) -> Callable:
         match mode:
             case "luminance": return ImageNormalization.calculate_luminance
             case "lightness": return ImageNormalization.calculate_lightness
@@ -89,16 +89,18 @@ def image_resize(image: np.ndarray, width=None, height=None, inter=cv2.INTER_ARE
     if height is None and width is None:
         return image
 
-    if width is None:
+    elif width is None and height is not None:
         # get ratio of height to width
         r = height / float(w)
         dim = (height, int(h * r))
 
-    elif height is None:
+    elif height is None and width is not None:
         r = width / float(h)
         dim = (int(h * r), width)
 
     else:
+        if height is None or width is None:  # for typing
+            raise Exception("Unreachable Code")
         dim = (int(width / float(h) * h), int(height / float(w) * w))
 
     return cv2.resize(image, dim, interpolation=inter)
