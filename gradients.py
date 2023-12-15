@@ -95,7 +95,7 @@ class AsciiGradient:
             np.divide(np.subtract(normalize_to_size, arr.shape), 2))
 
         # cell_count = (padding + arr.shape)... area = cell_count[0] * cell_count[1]
-        area = np.multiply(np.add(padding, arr.shape))
+        area = np.multiply(*np.add(padding, arr.shape))
         return arr.sum() / area
 
     def find_gradient(self, palette: str, return_dict: bool) -> Union[str, dict]:
@@ -113,7 +113,7 @@ class AsciiGradient:
         return ''.join(chain.from_iterable(intensity_map.values()))
 
     @staticmethod
-    def normalize_bmp_shape(buff: any, s: int = 2 * FONT_SIZE, dims: str = "xy") -> np.ndarray:
+    def normalize_bmp_shape(buff, s: int = 2 * FONT_SIZE, dims: str = "xy") -> np.ndarray:
         # buff is column-major we want row-major
         arr = np.array(buff, dtype=np.uint8).reshape(buff.size[::-1])
 
@@ -140,7 +140,7 @@ class PresetGradients:
     ARROWS = AsciiGradient(" ←↑→↓↖↗↘↙", ordered=True)
     GEOMETRIC = AsciiGradient(" ○◔◐◕◕◑●", ordered=True)
     MATHEMATICAL = AsciiGradient(" ≠≤≥±≈√∞∫∑∆π", ordered=True)
-    
+
     __ALL_GRADIENTS__ = [
         UNI,
         ASCII,
