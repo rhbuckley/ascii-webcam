@@ -31,7 +31,8 @@ class AsciiImageConverter:
         """
         self.gradient = gradient
         self.color = color
-        self.image_size = kwargs.get("image_size", (None, DEFAULT_OUTPUT_WIDTH))
+        self.image_size = kwargs.get(
+            "image_size", (None, DEFAULT_OUTPUT_WIDTH))
 
         if kwargs.get("use_terminal", False):
             term_size = os.get_terminal_size()
@@ -81,7 +82,7 @@ class AsciiImageConverter:
             new_image[idx] = [
                 # find closest match in the gradient
                 self.gradient.closest_match(
-                    intensity, 
+                    intensity,
                     return_intensity=not to_ascii
                 ),
                 *(resized_image[idx] if self.color else []),
@@ -95,21 +96,21 @@ class AsciiImageConverter:
         """ convert an image to ascii for the terminal """
         converted_image = self.convert_image(image)
 
-        if self.color:
-            wrap_pixel = lambda c, pix: Fore.RGB(*pix) + c + Style.RESET
-        else:
-            wrap_pixel = lambda c, pix: c
+        def wrap_pixel(child, pixel: tuple):
+            if not self.color:
+                return child
+            return Fore.RGB(*pixel) + child + Style.RESET
 
         return "\n".join([
             "".join(wrap_pixel(char, pixel) for char, *pixel in row)
             for row in converted_image
         ])
 
-    def convert_image_from_path(self, path: str, to_terminal: bool = False):
+    def convert_image_from_path(self, path: str, to_terminal: bool = False, **kwargs):
         """ convert an image from a path to ascii """
         image = cv2.imread(path, cv2.IMREAD_COLOR)
         if image is None:
             raise IOError(f"Could not read image from path: {path}")
         if to_terminal:
             return self.convert_image_to_terminal(image)
-        return self.convert_image(image)
+        return self.convert_image(image, **kwargs)
