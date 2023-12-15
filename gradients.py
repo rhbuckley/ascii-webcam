@@ -138,3 +138,15 @@ class PresetGradients:
     ARROWS = AsciiGradient(" ←↑→↓↖↗↘↙", ordered=True)
     GEOMETRIC = AsciiGradient(" ○◔◐◕◕◑●", ordered=True)
     MATHEMATICAL = AsciiGradient(" ≠≤≥±≈√∞∫∑∆π", ordered=True)
+    
+    __ALL_GRADIENTS__ = [
+        UNI,
+        ASCII,
+        ASCII_EXTENDED,
+        ALPHABETIC,
+        ALPHANUMERIC,
+        BLOCKS,
+        ARROWS,
+        GEOMETRIC,
+        MATHEMATICAL
+    ]
